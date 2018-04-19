@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -60,8 +59,6 @@ public class AppTest {
         String expectedOutput = new String(Files.readAllBytes(Paths.get(App.class.getResource(OUTPUT).toURI())));
         App.main(null);
         assertEquals(expectedOutput, outContent.toString().trim());
-
-        assertTrue(true);
     }
 
     @Test
