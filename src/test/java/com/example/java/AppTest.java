@@ -1,5 +1,8 @@
 package com.example.java;
 
+import com.example.java.model.TestCase;
+import com.example.java.util.FileUtility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +21,7 @@ import static org.junit.Assert.assertTrue;
  * Unit test for simple App.
  */
 public class AppTest {
-    private static final String FILE = "/io.json";
+    private static final String FILE = "io.json";
     private static final String INPUT = "/input.txt";
     private static final String OUTPUT = "/output.txt";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -48,11 +51,8 @@ public class AppTest {
         assertEquals("hello again", errContent.toString());
     }
 
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue() throws Exception {
+    public void runSingleTestCase() throws Exception {
         File inputFile = new File(AppTest.class.getResource(INPUT).toURI());
         final FileInputStream fileInputStream = new FileInputStream(inputFile);
         System.setIn(fileInputStream);
@@ -62,5 +62,13 @@ public class AppTest {
         assertEquals(expectedOutput, outContent.toString().trim());
 
         assertTrue(true);
+    }
+
+    @Test
+    public void runMultipleTestCases() throws Exception {
+        String testCasesAsString = FileUtility.readFromResourcesDirectory(FILE, getClass().getClassLoader());
+        ObjectMapper objectMapper = new ObjectMapper();
+        TestCase[] testCases = objectMapper.readValue(testCasesAsString, TestCase[].class);
+        assertEquals(2, testCases.length);
     }
 }
