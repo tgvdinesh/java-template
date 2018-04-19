@@ -1,0 +1,10 @@
+[
+  {
+    "input": "3\n",
+    "output": "Weird\n"
+  },
+  {
+    "input": "24\n",
+    "output": "Not Weird\n"
+  }
+]
