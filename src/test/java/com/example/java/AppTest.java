@@ -35,7 +35,7 @@ public class AppTest {
     }
 
     @Test
-    public void runSingleTestCase() throws Exception {
+    public void runCustomTestCase() throws Exception {
         File inputFile = new File(AppTest.class.getResource(INPUT).toURI());
         final FileInputStream fileInputStream = new FileInputStream(inputFile);
         System.setIn(fileInputStream);
@@ -45,20 +45,25 @@ public class AppTest {
     }
 
     @Test
-    public void runMultipleTestCases() throws Exception {
+    public void runTestCases() throws Exception {
         String testCasesAsString = FileUtility.readFromResourcesDirectory(FILE, getClass().getClassLoader());
         ObjectMapper objectMapper = new ObjectMapper();
         TestCase[] testCases = objectMapper.readValue(testCasesAsString, TestCase[].class);
-        if (testCases.length > 1) {
+        if (testCases.length > 0) {
             for (TestCase testCase : testCases) {
                 InputStream stream = new ByteArrayInputStream(testCase.getInput().getBytes(StandardCharsets.UTF_8));
                 System.setIn(stream);
                 App.main(null);
-                assertEquals(testCase.getOutput().trim(), outContent.toString().trim());
+                if (testCase.getOutput().trim().equals(outContent.toString().trim())) {
+                    assertEquals(testCase.getOutput().trim(), outContent.toString().trim());
+                } else {
+                    assertEquals(testCase.getOutput().trim(), outContent.toString().trim());
+                    FileUtility.writeToCustomTestCase(testCase);
+                }
                 outContent.reset();
             }
         } else {
-            System.err.println("You do not have multiple test case. Please run singe test case!");
+            System.err.println("You do not have test cases!!");
         }
     }
 }
