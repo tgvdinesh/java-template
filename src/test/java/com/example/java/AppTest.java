@@ -54,12 +54,9 @@ public class AppTest {
                 InputStream stream = new ByteArrayInputStream(testCase.getInput().getBytes(StandardCharsets.UTF_8));
                 System.setIn(stream);
                 App.main(null);
-                if (testCase.getOutput().trim().equals(outContent.toString().trim())) {
-                    assertEquals(testCase.getOutput().trim(), outContent.toString().trim());
-                } else {
-                    assertEquals(testCase.getOutput().trim(), outContent.toString().trim());
-                    FileUtility.writeToCustomTestCase(testCase);
-                }
+                String expectedOutput = testCase.getOutput().trim().replaceAll("\r\n", "\n");
+                String actualOutput = outContent.toString().trim().replaceAll("\r\n", "\n");
+                assertEquals(expectedOutput, actualOutput);
                 outContent.reset();
             }
         } else {
