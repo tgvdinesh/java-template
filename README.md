@@ -1,6 +1,10 @@
 ### About
 Java template for the [Mind sport IntelliJ plugin](https://plugins.jetbrains.com/plugin/10688-mind-sport)
 
+### Screenshot
+
+![Successful run](/img/success-run.png)
+
 ### How does it work ?
 
 #### Running with [competitive-companion](https://github.com/jmerle/competitive-companion) browser extension
